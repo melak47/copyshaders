@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.19)
 
 project(copyshaders VERSION 0.1.0)
 
@@ -14,8 +14,9 @@ add_executable(demo
     src/main.cpp
 )
 add_custom_target(
-    copy_shaders ALL
+    copy_shaders
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_BINARY_DIR}/shaders "$<TARGET_FILE_DIR:demo>/assets/shaders"
     COMMENT "Copying shaders"
+    DEPENDS compile_shaders
 )
-add_dependencies(copy_shaders compile_shaders)
+add_dependencies(demo copy_shaders)
